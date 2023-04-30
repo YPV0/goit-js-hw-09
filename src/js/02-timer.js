@@ -1,6 +1,6 @@
+import { Notify } from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import notiflix from 'notiflix';
 
 const inputPicker = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
@@ -23,6 +23,10 @@ const flatpickrOptions = {
 
 flatpickr(inputPicker, flatpickrOptions);
 
+function formatTimeUnit(value) {
+  return value.toString().padStart(2, '0');
+}
+
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -43,7 +47,7 @@ function startCountdown(selectedTime) {
   const now = Date.now();
 
   if (selectedTime <= now) {
-    notiflix.Notify.failure('Please choose a date in the future');
+    Notify.failure('Please choose a date in the future');
     return;
   }
 
@@ -62,10 +66,10 @@ function startCountdown(selectedTime) {
 function countdown(time) {
   const { days, hours, minutes, seconds } = convertMs(time);
 
-  timeRefs.days.textContent = days;
-  timeRefs.hours.textContent = hours;
-  timeRefs.mins.textContent = minutes;
-  timeRefs.secs.textContent = seconds;
+  timeRefs.days.textContent = formatTimeUnit(days);
+  timeRefs.hours.textContent = formatTimeUnit(hours);
+  timeRefs.mins.textContent = formatTimeUnit(minutes);
+  timeRefs.secs.textContent = formatTimeUnit(seconds);
 
   if (time <= 0) {
     clearTimeout(countdownTimeout);

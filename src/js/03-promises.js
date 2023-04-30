@@ -1,4 +1,4 @@
-import notiflix from 'notiflix';
+import { Notify } from 'notiflix';
 const form = document.querySelector('.form');
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
@@ -6,14 +6,10 @@ function createPromise(position, delay) {
 
     setTimeout(() => {
       if (shouldResolve) {
-        notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
-        );
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
         resolve({ position, delay });
       } else {
-        notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
-        );
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
         reject({ position, delay });
       }
     }, delay);
